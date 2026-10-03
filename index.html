@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahacara Cafe - Do It for the Plot. Tara, Sahacara.</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Playfair Display for serif aesthetic & Inter for clean readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: '#8DA28C',
+            rust: '#A4530C',
+            cream: '#EEE9C1',
+            darkbrown: '#3A230A',
+            creamdark: '#e3dcab',
+            rustlight: '#be6312'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #EEE9C1;
+      color: #3A230A;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .hero-pattern {
+      background-color: #EEE9C1;
+      background-image: radial-gradient(#8DA28C 0.75px, transparent 0.75px), radial-gradient(#8DA28C 0.75px, #EEE9C1 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      background-opacity: 0.15;
+    }
+    .badge-glow {
+      box-shadow: 0 0 15px rgba(164, 83, 12, 0.3);
+    }
+    .glass-card {
+      background: rgba(238, 233, 193, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(141, 162, 140, 0.3);
+    }
+    /* Coupon dashed border style */
+    .coupon-border {
+      border: 2px dashed #A4530C;
+    }
+  </style>
+</head>
+<body class="selection:bg-rust selection:text-cream">
+
+  <div class="bg-rust text-cream text-xs md:text-sm font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2 shadow-sm">
+    <span class="bg-cream text-rust font-bold px-2 py-0.5 rounded-full text-xs uppercase tracking-wider">New Campaign</span>
+    <span>✨ "Do It for the Plot. Tara, Sahacara." — Get 20% OFF Plot Twist Combo!</span>
+    <button onclick="openCouponModal()" class="underline font-bold hover:text-white transition ml-2">Claim Coupon</button>
+  </div>
+
+  <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-sage/30 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Branding -->
+      <a href="#" class="flex items-center gap-3 group">
+        <!-- SVG Sahacara Logo Recreation based on brand art -->
+        <div class="w-12 h-12 rounded-full bg-rust/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
+          <svg viewBox="0 0 200 200" class="w-full h-full text-rust fill-current">
+            <path d="M100 20 C100 60, 60 100, 20 100 C60 100, 100 140, 100 180 C100 140, 140 100, 180 100 C140 100, 100 60, 100 20 Z"/>
+            <circle cx="100" cy="100" r="16" fill="#EEE9C1"/>
+            <circle cx="100" cy="100" r="8" fill="#3A230A"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-serif text-2xl font-extrabold tracking-tight text-darkbrown block leading-none">Sahacara</span>
+          <span class="text-[10px] tracking-[0.25em] text-rust font-bold uppercase">Cafe & Workspace</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 font-medium text-darkbrown">
+        <a href="#about" class="hover:text-rust transition-colors py-1">Our Story</a>
+        <a href="#menu" class="hover:text-rust transition-colors py-1">Menu</a>
+        <a href="#campaign" class="hover:text-rust transition-colors py-1">Plot Twist Promo</a>
+        <a href="#ambiance" class="hover:text-rust transition-colors py-1">Ambiance</a>
+        <a href="#reviews" class="hover:text-rust transition-colors py-1">Reviews</a>
+      </nav>
+
+      <!-- Right Action Button -->
+      <div class="hidden sm:flex items-center gap-4">
+        <button onclick="openCouponModal()" class="bg-rust hover:bg-rustlight text-cream font-semibold px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition transform active:scale-95 flex items-center gap-2">
+          <i class="fa-solid fa-ticket"></i>
+          <span>Get Coupon</span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-darkbrown text-2xl p-2 focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-cream border-b border-sage/40 px-6 py-4 space-y-3">
+      <a href="#about" class="block font-medium text-darkbrown hover:text-rust py-1">Our Story</a>
+      <a href="#menu" class="block font-medium text-darkbrown hover:text-rust py-1">Menu</a>
+      <a href="#campaign" class="block font-medium text-darkbrown hover:text-rust py-1">Plot Twist Promo</a>
+      <a href="#ambiance" class="block font-medium text-darkbrown hover:text-rust py-1">Ambiance</a>
+      <a href="#reviews" class="block font-medium text-darkbrown hover:text-rust py-1">Reviews</a>
+      <button onclick="openCouponModal()" class="w-full mt-2 bg-rust text-cream font-semibold py-2.5 rounded-full shadow text-center">
+        Get Digital Coupon
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative min-h-[88vh] flex items-center hero-pattern py-12 lg:py-20 overflow-hidden border-b border-sage/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Hero Text Content -->
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sage/30 text-darkbrown text-sm font-semibold border border-sage/50">
+              <span class="w-2 h-2 rounded-full bg-rust animate-pulse"></span>
+              Your Everyday Aesthetic Cozy Haven
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-extrabold text-darkbrown leading-[1.1] tracking-tight">
+              Do It for the Plot. <br/>
+              <span class="text-rust italic font-normal">Tara, Sahacara.</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-darkbrown/80 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+              Whether you're finishing an assignment, hanging out with friends, or having a spontaneous coffee date—make today a chapter worth remembering. Affordable artisan coffee & freshly baked cinnamon treats await.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+              <a href="#menu" class="w-full sm:w-auto bg-darkbrown text-cream hover:bg-rust font-semibold px-8 py-4 rounded-full shadow-lg transition-all text-center flex items-center justify-center gap-3">
+                <span>Explore Menu</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+              <button onclick="openCouponModal()" class="w-full sm:w-auto bg-sage text-darkbrown hover:bg-sage/80 font-bold px-8 py-4 rounded-full shadow transition text-center flex items-center justify-center gap-2 border border-sage/60">
+                <i class="fa-solid fa-tags text-rust"></i>
+                <span>Claim Promo Coupon</span>
+              </button>
+            </div>
+
+            <!-- Mini stats / key perks -->
+            <div class="pt-8 grid grid-cols-3 gap-4 border-t border-sage/40 max-w-lg mx-auto lg:mx-0">
+              <div class="text-center lg:text-left">
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-rust">₱90+</p>
+                <p class="text-xs text-darkbrown/70 font-medium">Student Friendly</p>
+              </div>
+              <div class="text-center lg:text-left">
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-rust">100%</p>
+                <p class="text-xs text-darkbrown/70 font-medium">Cozy Vibes & WiFi</p>
+              </div>
+              <div class="text-center lg:text-left">
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-rust">1 Year</p>
+                <p class="text-xs text-darkbrown/70 font-medium">Community Loved</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Image Feature Card Collage -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              <!-- Background Decorative Circle -->
+              <div class="absolute -top-6 -left-6 w-72 h-72 bg-sage/40 rounded-full blur-3xl -z-10"></div>
+              <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-rust/20 rounded-full blur-3xl -z-10"></div>
+
+              <!-- Main Hero Featured Drink (Matcha) -->
+              <div class="bg-white p-4 rounded-3xl shadow-xl border border-sage/30 transform lg:-rotate-2 hover:rotate-0 transition duration-500">
+                <div class="relative h-80 sm:h-96 rounded-2xl overflow-hidden bg-darkbrown/5">
+                  <img src="unnamed.webp" alt="Sahacara Special Matcha Latte" class="w-full h-full object-cover transform hover:scale-105 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80'">
+                  <div class="absolute top-4 right-4 bg-rust text-cream font-bold text-xs uppercase px-3 py-1.5 rounded-full shadow">
+                    ★ Best Seller
+                  </div>
+                  <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-darkbrown/90 via-darkbrown/40 to-transparent p-6 text-white">
+                    <span class="text-xs font-semibold text-sage uppercase tracking-wider">Artisan Matcha</span>
+                    <h3 class="font-serif text-2xl font-bold">Pistachio Cream Matcha</h3>
+                    <p class="text-xs text-cream/80 mt-1">Layered ceremonial matcha with handcrafted pistachio cold foam</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating Mini Card (Iced Latte) -->
+              <div class="absolute -bottom-6 -left-6 bg-cream p-3 rounded-2xl shadow-2xl border border-rust/30 flex items-center gap-3 w-56 sm:w-64 transform lg:rotate-3">
+                <img src="snaptik-app-7682040702343105813-slide-12.jpg" alt="Sea Salt Caramel Latte" class="w-16 h-16 rounded-xl object-cover" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=300&q=80'">
+                <div>
+                  <h4 class="font-serif font-bold text-sm text-darkbrown">Sea Salt Latte</h4>
+                  <p class="text-xs text-rust font-semibold">₱120 • Plot Favorite</p>
+                  <span class="text-[10px] text-darkbrown/60">★★★★★ (140+ reviews)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-16 lg:py-24 bg-cream border-b border-sage/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Image grid side -->
+          <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <div class="rounded-2xl overflow-hidden shadow-md h-56">
+                <img src="830177115_1837835177400997_2268094849022710595_n.jpg" alt="Cozy Sofa Corner" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80'">
+              </div>
+              <div class="bg-sage/20 p-6 rounded-2xl border border-sage/40 text-center">
+                <i class="fa-solid fa-mug-hot text-3xl text-rust mb-2"></i>
+                <h4 class="font-serif font-bold text-lg text-darkbrown">Warm Community</h4>
+                <p class="text-xs text-darkbrown/70 mt-1">A welcoming space for students, fresh grads, and freelancers.</p>
+              </div>
+            </div>
+            <div class="space-y-4 pt-6">
+              <div class="bg-rust/10 p-6 rounded-2xl border border-rust/30 text-center">
+                <i class="fa-solid fa-heart text-3xl text-rust mb-2"></i>
+                <h4 class="font-serif font-bold text-lg text-darkbrown">1 Year of Memories</h4>
+                <p class="text-xs text-darkbrown/70 mt-1">Serving high quality beverages and homemade pastries daily.</p>
+              </div>
+              <div class="rounded-2xl overflow-hidden shadow-md h-56">
+                <img src="641287849_122161575482823744_1103028205951420678_n.jpg" alt="Handcrafted Ceramics Display Shelf" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'">
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Side -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-block px-3 py-1 rounded-full bg-rust/10 text-rust text-xs font-bold uppercase tracking-wider">
+              About Sahacara Cafe
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-darkbrown leading-tight">
+              A cozy sanctuary crafted for your daily study, work & coffee breaks.
+            </h2>
+            <p class="text-darkbrown/80 leading-relaxed">
+              Established a year ago, <strong>Sahacara Cafe</strong> was built with a simple mission: to offer high-quality coffee and freshly baked treats at prices students and young professionals can genuinely afford. 
+            </p>
+            <p class="text-darkbrown/80 leading-relaxed">
+              Whether you need a quiet nook to focus on your laptop, a comfortable couch to catch up with friends, or an aesthetic backdrop for your social media content—Sahacara is your second home.
+            </p>
+
+            <div class="pt-2 grid grid-cols-2 gap-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-sage flex items-center justify-center text-darkbrown shrink-0 mt-1">
+                  <i class="fa-solid fa-check text-xs"></i>
+                </div>
+                <div>
+                  <h5 class="font-bold text-sm text-darkbrown">Affordable Pricing</h5>
+                  <p class="text-xs text-darkbrown/70">Budget-friendly combos tailored for students.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-sage flex items-center justify-center text-darkbrown shrink-0 mt-1">
+                  <i class="fa-solid fa-wifi text-xs"></i>
+                </div>
+                <div>
+                  <h5 class="font-bold text-sm text-darkbrown">Study Friendly</h5>
+                  <p class="text-xs text-darkbrown/70">Fast WiFi and ample power outlets.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="campaign" class="py-16 bg-sage/20 border-b border-sage/30 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-darkbrown rounded-3xl p-8 lg:p-12 text-cream shadow-2xl relative overflow-hidden">
+          
+          <!-- Decorative Background Elements -->
+          <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-rust/30 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-sage/30 rounded-full blur-3xl"></div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div class="lg:col-span-7 space-y-4">
+              <span class="bg-rust text-cream text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block">
+                Campaign Special Offer
+              </span>
+              <h2 class="font-serif text-3xl sm:text-5xl font-bold leading-tight text-cream">
+                The "Plot Twist Combo" 🥐☕
+              </h2>
+              <p class="text-cream/80 text-base sm:text-lg">
+                Pair any Signature Espresso or Cream Match Drink with our fresh warm Oreo Cream Cinnamon Roll for only <span class="text-cream font-bold underline">₱175</span> (Save 20%).
+              </p>
+              <p class="text-xs text-sage italic">
+                *Exclusive digital coupon promo. Show your generated code to our barista upon ordering!
+              </p>
+              <div class="pt-4">
+                <button onclick="openCouponModal()" class="bg-rust hover:bg-rustlight text-cream font-bold px-8 py-3.5 rounded-full shadow-lg transition transform hover:-translate-y-0.5">
+                  <i class="fa-solid fa-qrcode mr-2"></i> Claim Digital Coupon
+                </button>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 flex justify-center">
+              <!-- Digital Coupon Preview Card -->
+              <div class="bg-cream text-darkbrown p-6 rounded-2xl w-full max-w-sm coupon-border shadow-xl transform rotate-1 hover:rotate-0 transition">
+                <div class="flex justify-between items-start border-b border-sage/40 pb-3">
+                  <div>
+                    <h3 class="font-serif font-extrabold text-lg text-darkbrown">PLOT TWIST BUNDLE</h3>
+                    <p class="text-xs text-rust font-semibold">Sahacara Digital Pass</p>
+                  </div>
+                  <span class="text-xs bg-sage text-darkbrown font-bold px-2 py-1 rounded">20% OFF</span>
+                </div>
+                <div class="py-4 space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-darkbrown/70">Includes:</span>
+                    <span class="font-bold">Drink + Pastry</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-darkbrown/70">Regular Price:</span>
+                    <span class="line-through text-darkbrown/50">₱220</span>
+                  </div>
+                  <div class="flex justify-between text-base font-bold text-rust">
+                    <span>Bundle Price:</span>
+                    <span>₱175</span>
+                  </div>
+                </div>
+                <div class="bg-darkbrown/5 p-3 rounded-lg text-center border border-dashed border-rust/40">
+                  <span class="text-xs uppercase tracking-widest text-darkbrown/60 block mb-1">Coupon Code</span>
+                  <span class="font-mono text-lg font-extrabold text-rust tracking-wider">SAHACARA-PLOT-2026</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="py-16 lg:py-24 bg-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Menu Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <span class="text-xs font-bold text-rust uppercase tracking-widest bg-rust/10 px-3 py-1 rounded-full">
+            Crafted With Care
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-darkbrown">
+            Our Menu Highlights
+          </h2>
+          <p class="text-darkbrown/70 text-sm sm:text-base">
+            Affordable, aesthetically pleasing beverages and comforting fresh pastries crafted to energize your daily plot.
+          </p>
+
+          <!-- Menu Category Tabs -->
+          <div class="flex flex-wrap justify-center gap-2 pt-6" id="menu-tabs">
+            <button onclick="filterMenu('all')" class="menu-tab-btn active bg-darkbrown text-cream px-5 py-2 rounded-full text-sm font-semibold transition">
+              All Items
+            </button>
+            <button onclick="filterMenu('coffee')" class="menu-tab-btn bg-sage/30 text-darkbrown hover:bg-sage/50 px-5 py-2 rounded-full text-sm font-semibold transition">
+              Espresso & Coffee
+            </button>
+            <button onclick="filterMenu('matcha')" class="menu-tab-btn bg-sage/30 text-darkbrown hover:bg-sage/50 px-5 py-2 rounded-full text-sm font-semibold transition">
+              Matcha & Non-Coffee
+            </button>
+            <button onclick="filterMenu('pastry')" class="menu-tab-btn bg-sage/30 text-darkbrown hover:bg-sage/50 px-5 py-2 rounded-full text-sm font-semibold transition">
+              Pastries & Treats
+            </button>
+          </div>
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+          
+          <!-- Item 1: Matcha -->
+          <div class="menu-item matcha bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="unnamed.webp" alt="Pistachio Matcha Latte" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-3 left-3 bg-sage text-darkbrown font-bold text-xs px-2.5 py-1 rounded-full">Matcha</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Pistachio Matcha Latte</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱130</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Ceremonial Grade Uji Matcha topped with velvety pistachio crushed nuts and sweet milk foam.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-fire mr-1"></i> Best Seller</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Sea Salt Caramel Coffee -->
+          <div class="menu-item coffee bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="snaptik-app-7682040702343105813-slide-12.jpg" alt="Sea Salt Caramel Latte" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-3 left-3 bg-rust text-cream font-bold text-xs px-2.5 py-1 rounded-full">Coffee</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Sea Salt Caramel Latte</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱120</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Rich espresso blended with salted caramel drizzle and cold thick cream topping.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-star mr-1"></i> Customer Favorite</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Cinnamon Roll -->
+          <div class="menu-item pastry bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="835676538_4462237194041107_1494710550174692229_n.jpg" alt="Oreo Cream Cinnamon Bun" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-3 left-3 bg-darkbrown text-cream font-bold text-xs px-2.5 py-1 rounded-full">Fresh Pastry</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Oreo Cookie Cinnamon Roll</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱95</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Soft, pillow-dough cinnamon roll smothered with cream cheese glaze and crushed Oreo crumble.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-bread-slice mr-1"></i> Baked Fresh Daily</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Spanish Latte -->
+          <div class="menu-item coffee bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80" alt="Iced Spanish Latte" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-rust text-cream font-bold text-xs px-2.5 py-1 rounded-full">Coffee</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Iced Sahacara Spanish Latte</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱110</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Double shot espresso sweetened with smooth condensed milk for a perfect balanced wake-up call.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-thumbs-up mr-1"></i> Daily Study Fuel</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 5: Strawberry Cloud Drink -->
+          <div class="menu-item matcha bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="https://images.unsplash.com/photo-1553787499-6f9133860278?auto=format&fit=crop&w=600&q=80" alt="Strawberry Oat Latte" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-sage text-darkbrown font-bold text-xs px-2.5 py-1 rounded-full">Non-Coffee</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Strawberry Oat Latte</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱125</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Real house-made strawberry compote layered with creamy oat milk and soft cream top.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-leaf mr-1"></i> Non-Caffeine Choice</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 6: Butter Croissant -->
+          <div class="menu-item pastry bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-sage/30 flex flex-col">
+            <div class="relative h-60 overflow-hidden bg-darkbrown/5">
+              <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" alt="Classic Flaky Croissant" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-darkbrown text-cream font-bold text-xs px-2.5 py-1 rounded-full">Fresh Pastry</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-serif font-bold text-xl text-darkbrown">Golden Butter Croissant</h3>
+                  <span class="font-serif font-bold text-rust text-lg">₱85</span>
+                </div>
+                <p class="text-xs text-darkbrown/70 mt-2 leading-relaxed">
+                  Flaky, buttery layers baked fresh every morning. Great when paired with warm latte.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sage/20 flex justify-between items-center text-xs">
+                <span class="text-rust font-medium"><i class="fa-solid fa-mug-hot mr-1"></i> Served Warm</span>
+                <button onclick="openCouponModal()" class="text-darkbrown font-semibold hover:text-rust underline">Bundle in Plot Twist</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="ambiance" class="py-16 lg:py-24 bg-sage/10 border-t border-b border-sage/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <span class="text-xs font-bold text-rust uppercase tracking-widest bg-rust/10 px-3 py-1 rounded-full">
+            The Ambiance
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-darkbrown">
+            Cozy Corners & Aesthetic Vibes
+          </h2>
+          <p class="text-darkbrown/70 text-sm sm:text-base">
+            Designed to feel like a warm hug. Take photos, study peacefully, or enjoy heartfelt conversations with friends.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Ambiance 1 -->
+          <div class="bg-cream rounded-2xl overflow-hidden shadow-lg border border-sage/30 group">
+            <div class="h-72 overflow-hidden relative">
+              <img src="830177115_1837835177400997_2268094849022710595_n.jpg" alt="Cozy Sofa Couch Corner" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80'">
+              <div class="absolute inset-0 bg-darkbrown/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                <span class="bg-cream text-darkbrown font-bold text-xs px-4 py-2 rounded-full shadow">The Patchwork Sofa Nook</span>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <h4 class="font-serif font-bold text-lg text-darkbrown">Lounge & Social Corner</h4>
+              <p class="text-xs text-darkbrown/70 mt-1">Comfortable patchwork couch and gallery wall for group hangouts.</p>
+            </div>
+          </div>
+
+          <!-- Ambiance 2 -->
+          <div class="bg-cream rounded-2xl overflow-hidden shadow-lg border border-sage/30 group">
+            <div class="h-72 overflow-hidden relative">
+              <img src="641287849_122161575482823744_1103028205951420678_n.jpg" alt="Ceramics Shelf Display" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'">
+              <div class="absolute inset-0 bg-darkbrown/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                <span class="bg-cream text-darkbrown font-bold text-xs px-4 py-2 rounded-full shadow">Handmade Ceramics Wall</span>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <h4 class="font-serif font-bold text-lg text-darkbrown">Crafted Ceramic Display</h4>
+              <p class="text-xs text-darkbrown/70 mt-1">Warm illuminated shelves displaying artisanal coffee bowls and cups.</p>
+            </div>
+          </div>
+
+          <!-- Ambiance 3 -->
+          <div class="bg-cream rounded-2xl overflow-hidden shadow-lg border border-sage/30 group">
+            <div class="h-72 overflow-hidden relative">
+              <img src="835676538_4462237194041107_1494710550174692229_n.jpg" alt="Bar Counter Area" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80'">
+              <div class="absolute inset-0 bg-darkbrown/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                <span class="bg-cream text-darkbrown font-bold text-xs px-4 py-2 rounded-full shadow">Fresh Bakery Counter</span>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <h4 class="font-serif font-bold text-lg text-darkbrown">Coffee & Bake Bar</h4>
+              <p class="text-xs text-darkbrown/70 mt-1">Watch our baristas craft your favorite drinks in real-time.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="py-16 lg:py-24 bg-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <span class="text-xs font-bold text-rust uppercase tracking-widest bg-rust/10 px-3 py-1 rounded-full">
+            TikTok & IG Buzz
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-darkbrown">
+            What Customers Are Saying
+          </h2>
+          <p class="text-darkbrown/70 text-sm">
+            Tag @SahacaraCafe in your TikToks and IG Stories to get featured!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Review 1 -->
+          <div class="bg-white p-6 rounded-2xl shadow-md border border-sage/30 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-1 text-rust text-sm">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-xs text-darkbrown/80 italic leading-relaxed">
+                "Literally my favorite study spot in the area! The pistachio matcha drink is 10/10 and the WiFi is fast enough for my online classes. Do it for the plot guys, super worth visiting!"
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-sage/20 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-sage/40 flex items-center justify-center text-darkbrown font-bold text-sm">
+                CS
+              </div>
+              <div>
+                <h5 class="font-bold text-sm text-darkbrown">Clarisse S.</h5>
+                <p class="text-[10px] text-darkbrown/60">College Student • TikTok Review</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="bg-white p-6 rounded-2xl shadow-md border border-sage/30 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-1 text-rust text-sm">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-xs text-darkbrown/80 italic leading-relaxed">
+                "Affordable coffee that actually tastes premium! The Oreo cinnamon roll paired with sea salt caramel coffee was the best treat after a tough week at work."
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-sage/20 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-rust/30 flex items-center justify-center text-rust font-bold text-sm">
+                MJ
+              </div>
+              <div>
+                <h5 class="font-bold text-sm text-darkbrown">Mark J.</h5>
+                <p class="text-[10px] text-darkbrown/60">Young Professional • IG Story</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="bg-white p-6 rounded-2xl shadow-md border border-sage/30 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-1 text-rust text-sm">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-xs text-darkbrown/80 italic leading-relaxed">
+                "The ambiance is so cozy and welcoming. Staff are friendly and polite. Claimed my Plot Twist coupon code and saved on my order. Definitely coming back with my group!"
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-sage/20 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-sage/40 flex items-center justify-center text-darkbrown font-bold text-sm">
+                AB
+              </div>
+              <div>
+                <h5 class="font-bold text-sm text-darkbrown">Alyssa B.</h5>
+                <p class="text-[10px] text-darkbrown/60">Freelancer • Facebook Review</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-rust text-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+        <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-cream">
+          Ready for your next coffee plot?
+        </h2>
+        <p class="text-cream/90 max-w-xl mx-auto text-sm sm:text-base">
+          Visit Sahacara Cafe today. Enjoy great coffee, comforting food, and cozy moments with friends.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 pt-2">
+          <button onclick="openCouponModal()" class="bg-cream text-darkbrown font-bold px-8 py-3.5 rounded-full shadow-lg hover:bg-white transition">
+            <i class="fa-solid fa-ticket text-rust mr-2"></i> Get Your Promo Code
+          </button>
+          <a href="#footer" class="bg-darkbrown text-cream border border-cream/30 font-bold px-8 py-3.5 rounded-full shadow hover:bg-darkbrown/80 transition">
+            <i class="fa-solid fa-location-dot text-sage mr-2"></i> Location & Hours
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="bg-darkbrown text-cream pt-16 pb-12 border-t border-rust/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-cream/10">
+        
+        <!-- Col 1: Brand -->
+        <div class="md:col-span-5 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center p-1">
+              <svg viewBox="0 0 200 200" class="w-full h-full text-cream fill-current">
+                <path d="M100 20 C100 60, 60 100, 20 100 C60 100, 100 140, 100 180 C100 140, 140 100, 180 100 C140 100, 100 60, 100 20 Z"/>
+                <circle cx="100" cy="100" r="16" fill="#EEE9C1"/>
+              </svg>
+            </div>
+            <span class="font-serif text-2xl font-bold tracking-tight text-cream">Sahacara Cafe</span>
+          </div>
+          <p class="text-xs text-cream/70 leading-relaxed max-w-sm">
+            Providing a comfortable and welcoming environment for students, young professionals, and coffee lovers at affordable prices.
+          </p>
+          <!-- Social Icons -->
+          <div class="flex gap-4 pt-2 text-lg">
+            <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-rust flex items-center justify-center transition text-cream"><i class="fa-brands fa-tiktok text-sm"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-rust flex items-center justify-center transition text-cream"><i class="fa-brands fa-instagram text-sm"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-rust flex items-center justify-center transition text-cream"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="font-serif font-bold text-sm text-cream uppercase tracking-wider">Quick Navigation</h4>
+          <ul class="space-y-2 text-xs text-cream/70">
+            <li><a href="#about" class="hover:text-cream transition">Our History & Story</a></li>
+            <li><a href="#menu" class="hover:text-cream transition">Menu & Pricing</a></li>
+            <li><a href="#campaign" class="hover:text-cream transition">Plot Twist Combo Promo</a></li>
+            <li><a href="#ambiance" class="hover:text-cream transition">Cafe Ambiance Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Hours & Location -->
+        <div class="md:col-span-4 space-y-3">
+          <h4 class="font-serif font-bold text-sm text-cream uppercase tracking-wider">Store Info</h4>
+          <div class="space-y-2 text-xs text-cream/70">
+            <p><i class="fa-solid fa-clock text-rust mr-2"></i> <strong>Hours:</strong> Mon - Sun: 10:00 AM - 10:00 PM</p>
+            <p><i class="fa-solid fa-location-dot text-rust mr-2"></i> <strong>Location:</strong> Sahacara Cafe, Student Hub Zone</p>
+            <p><i class="fa-solid fa-wifi text-rust mr-2"></i> High-Speed WiFi & Power Outlets Available</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom Credits with Starlace Creatives Co. Branding -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/60">
+        <p>© 2026 Sahacara Cafe. All rights reserved.</p>
+        
+        <!-- Creative Agency Credit -->
+        <div class="flex items-center gap-2 bg-cream/5 px-4 py-2 rounded-full border border-cream/10">
+          <span>Designed with ♥ by</span>
+          <div class="flex items-center gap-1 font-bold text-cream">
+            <!-- Starlace Star Logo Recreation -->
+            <svg viewBox="0 0 100 100" class="w-3.5 h-3.5 text-rust fill-current">
+              <path d="M50 0 C50 35, 65 50, 100 50 C65 50, 50 65, 50 100 C50 65, 35 50, 0 50 C35 50, 50 35, 50 0 Z"/>
+            </svg>
+            <span class="tracking-wide text-xs">Starlace Creatives Co.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <div id="coupon-modal" class="fixed inset-0 z-50 hidden bg-darkbrown/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-cream rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl border-2 border-rust transform transition-all scale-95 opacity-0" id="modal-card">
+      
+      <!-- Close Button -->
+      <button onclick="closeCouponModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-darkbrown/10 hover:bg-rust text-darkbrown hover:text-cream flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="text-center space-y-2 mb-6">
+        <div class="w-12 h-12 rounded-full bg-rust/10 flex items-center justify-center mx-auto text-rust text-xl">
+          <i class="fa-solid fa-ticket"></i>
+        </div>
+        <h3 class="font-serif font-extrabold text-2xl text-darkbrown">Your Plot Twist Pass</h3>
+        <p class="text-xs text-darkbrown/70">
+          Show this pass to the cashier at Sahacara Cafe to enjoy 20% off your Coffee + Pastry bundle!
+        </p>
+      </div>
+
+      <!-- Interactive Coupon Ticket -->
+      <div class="bg-white p-5 rounded-2xl border-2 border-dashed border-rust space-y-4 shadow-sm relative overflow-hidden">
+        <div class="flex justify-between items-center text-xs text-darkbrown/70 border-b border-sage/30 pb-2">
+          <span>PROMO CODE</span>
+          <span class="text-rust font-bold">VALID TODAY</span>
+        </div>
+
+        <div class="text-center py-2">
+          <span id="coupon-code-display" class="font-mono text-2xl font-extrabold text-rust tracking-widest block bg-cream/50 py-2 rounded-lg border border-sage/40">
+            SAHACARA-PLOT-2026
+          </span>
+          <p class="text-[10px] text-darkbrown/60 mt-1">Tap copy button below to save code</p>
+        </div>
+
+        <div class="space-y-1 text-xs">
+          <div class="flex justify-between">
+            <span class="text-darkbrown/70">Offer:</span>
+            <span class="font-bold text-darkbrown">Plot Twist Combo (20% OFF)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-darkbrown/70">Bundle Price:</span>
+            <span class="font-bold text-rust">₱175.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="mt-6 space-y-2">
+        <button onclick="copyCouponCode()" id="copy-btn" class="w-full bg-rust hover:bg-rustlight text-cream font-bold py-3 rounded-full shadow transition flex items-center justify-center gap-2">
+          <i class="fa-regular fa-copy"></i>
+          <span id="copy-btn-text">Copy Discount Code</span>
+        </button>
+        <button onclick="closeCouponModal()" class="w-full bg-sage/30 hover:bg-sage/50 text-darkbrown font-semibold py-2.5 rounded-full text-xs transition">
+          Close Window
+        </button>
+      </div>
+
+      <div id="toast-msg" class="hidden text-center text-xs font-bold text-rust mt-3 bg-sage/20 py-1.5 rounded-md">
+        ✓ Code copied to clipboard!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle logic
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Modal state management
+    const modal = document.getElementById('coupon-modal');
+    const modalCard = document.getElementById('modal-card');
+
+    function openCouponModal() {
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalCard.classList.remove('scale-95', 'opacity-0');
+        modalCard.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeCouponModal() {
+      modalCard.classList.remove('scale-100', 'opacity-100');
+      modalCard.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    // Copy coupon code using fallback execCommand for iFrame security compliance
+    function copyCouponCode() {
+      const code = document.getElementById('coupon-code-display').innerText.trim();
+      const tempInput = document.createElement('textarea');
+      tempInput.value = code;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      const copyBtnText = document.getElementById('copy-btn-text');
+      const toast = document.getElementById('toast-msg');
+
+      copyBtnText.innerText = "Copied!";
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        copyBtnText.innerText = "Copy Discount Code";
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    // Menu category filter script
+    function filterMenu(category) {
+      const items = document.querySelectorAll('.menu-item');
+      const tabs = document.querySelectorAll('.menu-tab-btn');
+
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-darkbrown', 'text-cream');
+        tab.classList.add('bg-sage/30', 'text-darkbrown');
+      });
+
+      event.currentTarget.classList.remove('bg-sage/30', 'text-darkbrown');
+      event.currentTarget.classList.add('bg-darkbrown', 'text-cream');
+
+      items.forEach(item => {
+        if (category === 'all' || item.classList.contains(category)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
