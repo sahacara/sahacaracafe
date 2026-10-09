@@ -6,10 +6,10 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Plus Jakarta Sans for clean body text -->
+  <!-- Google Fonts: Fraunces (Bold 700/900) & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,8 +27,7 @@
             rustlight: '#be6312'
           },
           fontFamily: {
-            // Updated serif family to use your custom Amarego font
-            serif: ['"Amarego"', 'serif'],
+            serif: ['"Fraunces"', 'serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
@@ -37,14 +36,6 @@
   </script>
 
   <style>
-    /* 1. Define your custom uploaded font from GitHub */
-    @font-face {
-      font-family: 'Amarego';
-      src: url('https://github.com/sahacara/sahacaracafe/raw/main/Amarego_PERSONAL_USE_ONLY.otf') format('opentype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
     html {
       scroll-behavior: smooth;
     }
@@ -55,9 +46,10 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Force all headings and font-serif elements to use Amarego */
+    /* Force all headings and font-serif elements to use Fraunces Bold */
     .font-serif, h1, h2, h3 {
-      font-family: 'Amarego', serif !important;
+      font-family: 'Fraunces', serif !important;
+      font-weight: 700 !important;
     }
 
     .hero-pattern {
