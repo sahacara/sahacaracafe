@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sahacara Cafe - Do It for the Plot. Tara, Sahacara.</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Playfair Display for serif aesthetic & Inter for clean readability -->
+
+  <!-- Google Fonts: Plus Jakarta Sans for clean body text -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -26,7 +27,8 @@
             rustlight: '#be6312'
           },
           fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
+            // Updated serif family to use your custom Amarego font
+            serif: ['"Amarego"', 'serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
@@ -35,14 +37,29 @@
   </script>
 
   <style>
+    /* 1. Define your custom uploaded font from GitHub */
+    @font-face {
+      font-family: 'Amarego';
+      src: url('https://github.com/sahacara/sahacaracafe/raw/main/Amarego_PERSONAL_USE_ONLY.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     html {
       scroll-behavior: smooth;
     }
+
     body {
       background-color: #EEE9C1;
       color: #3A230A;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
+
+    /* Force all headings and font-serif elements to use Amarego */
+    .font-serif, h1, h2, h3 {
+      font-family: 'Amarego', serif !important;
+    }
+
     .hero-pattern {
       background-color: #EEE9C1;
       background-image: radial-gradient(#8DA28C 0.75px, transparent 0.75px), radial-gradient(#8DA28C 0.75px, #EEE9C1 0.75px);
@@ -50,15 +67,17 @@
       background-position: 0 0, 15px 15px;
       background-opacity: 0.15;
     }
+
     .badge-glow {
       box-shadow: 0 0 15px rgba(164, 83, 12, 0.3);
     }
+
     .glass-card {
       background: rgba(238, 233, 193, 0.85);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(141, 162, 140, 0.3);
     }
-    /* Coupon dashed border style */
+
     .coupon-border {
       border: 2px dashed #A4530C;
     }
